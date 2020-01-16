@@ -9,12 +9,14 @@ const app = express();
 const mongoose = require('mongoose');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+const { MONGO_ADRESS } = process.env;
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-mongoose.connect('mongodb://localhost:27017/newsdb', {
+mongoose.connect(MONGO_ADRESS, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,

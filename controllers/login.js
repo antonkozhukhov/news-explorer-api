@@ -23,7 +23,7 @@ module.exports.login = (req, res, next) => {
       res.send(token);
     })
     .catch(() => {
-      throw new AuthError('Необходима авторизация2');
+      throw new AuthError('Необходима авторизация');
     })
     .catch(next);
 };

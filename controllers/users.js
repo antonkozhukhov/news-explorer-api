@@ -15,7 +15,7 @@ const findUser = (req, res, next) => {
     })
     .catch(next);
 };
-const createUser = (req, res, next) => {
+const createUser = async (req, res, next) => {
   const {
     name, email, password,
   } = req.body;
@@ -26,11 +26,11 @@ const createUser = (req, res, next) => {
       }))
       .then((user) => {
         if (!user) {
-          throw new ParametersError('ошибка1 в параметрах');
+          throw new ParametersError('ошибка в параметрах');
         } else res.status(201).send(user);
       })
       .catch(next);
-  } else throw new ParametersError('ошибка2 в параметрах');
+  } else throw new ParametersError('ошибка в параметрах');
 };
 
 module.exports = {
