@@ -13,8 +13,9 @@ const postArticle = (req, res, next) => {
   const {
     keyword, title, text, date, source, link, image,
   } = req.body;
+  const owner = req.user._id;
   Article.create({
-    keyword, title, text, date, source, link, image,
+    keyword, title, text, date, source, link, image, owner,
   })
     .then((article) => {
       if (!article) {
@@ -24,22 +25,28 @@ const postArticle = (req, res, next) => {
     .catch(next);
 };
 const deleteArticle = (req, res, next) => {
-  Article.findById(req.params.id)
+  Article.findById(req.params.id).select('owner')
     .then((article) => {
-      if (article.owner === req.user._id) {
+      if (!article) {
+        throw new NotFoundError('такой статьи нет');
+      } else return article;
+    })
+
+    .then((article) => {
+      if (String(article.owner) === req.user._id) {
         Article.findByIdAndRemove(req.params.id)
+
           .then((article1) => {
-            if (!article1) {
-              throw new NotFoundError('такой статьи нет');
-            } else res.send(article);
+            res.send(article1);
           })
-          .catch(next);
+          .catch(() => {
+            throw new NotFoundError('такой статьи нет');
+          });
       } else throw new NotFoundArticleError('Нельзя удалять чужие статьи');
     })
+
     .catch(next);
 };
-
-
 module.exports = {
   getArticles, postArticle, deleteArticle,
 };

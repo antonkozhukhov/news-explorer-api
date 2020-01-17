@@ -15,24 +15,31 @@ const findUser = (req, res, next) => {
     })
     .catch(next);
 };
-const createUser = async (req, res, next) => {
+const createUser = (req, res, next) => {
   const {
     name, email, password,
   } = req.body;
-  if (password) {
-    bcrypt.hash(password, 10)
-      .then((hash) => User.create({
-        name, email, password: hash,
-      }))
-      .then((user) => {
-        if (!user) {
-          throw new ParametersError('ошибка в параметрах');
-        } else res.status(201).send(user);
-      })
-      .catch(next);
-  } else throw new ParametersError('ошибка в параметрах');
+  bcrypt.hash(password, 10)
+    .then((hash) => User.create({
+      name, email, password: hash,
+    }))
+    .then((user) => {
+      if (!user) {
+        throw new ParametersError('Ошибка в параметрах');
+      } else res.status(201).send(user);
+    })
+    .catch(next);
 };
-
+const findEmail = (req, res, next) => {
+  const { email } = req.body;
+  User.findOne({ email })
+    .then((user) => {
+      if (user) {
+        throw new ParametersError('Пользователь с таким email уже существует');
+      } else next();
+    })
+    .catch(next);
+};
 module.exports = {
-  findUser, createUser,
+  findUser, createUser, findEmail,
 };
