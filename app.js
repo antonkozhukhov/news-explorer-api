@@ -13,7 +13,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { NODE_ENV, MONGO_ADRESS } = process.env;
 const mongoAdress = NODE_ENV === 'production' ? MONGO_ADRESS : localAdress;
-
+console.log (mongoAdress);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
