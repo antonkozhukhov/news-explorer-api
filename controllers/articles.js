@@ -1,8 +1,8 @@
 
 const Article = require('../models/article');
-const ParametersError = require('../middlewares/parameters-error');
-const NotFoundError = require('../middlewares/not-found-error');
-const NotFoundArticleError = require('../middlewares/not-found-article-error');
+const ParametersError = require('../errors/parameters-error');
+const NotFoundError = require('../errors/not-found-error');
+const NotFoundArticleError = require('../errors/not-found-article-error');
 
 const getArticles = (req, res, next) => {
   Article.find({})
@@ -20,7 +20,7 @@ const postArticle = (req, res, next) => {
     .then((article) => {
       if (!article) {
         throw new ParametersError('ошибка в параметрах');
-      } else res.status(201).send(article);
+      } else res.status(201).send({ message: 'статья создана' });
     })
     .catch(next);
 };
@@ -36,8 +36,8 @@ const deleteArticle = (req, res, next) => {
       if (String(article.owner) === req.user._id) {
         Article.findByIdAndRemove(req.params.id)
 
-          .then((article1) => {
-            res.send(article1);
+          .then(() => {
+            res.send({ message: 'статья удалена' });
           })
           .catch(() => {
             throw new NotFoundError('такой статьи нет');

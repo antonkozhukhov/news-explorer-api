@@ -2,12 +2,11 @@
 
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const ParametersError = require('../middlewares/parameters-error');
-const NotFoundError = require('../middlewares/not-found-error');
+const ParametersError = require('../errors/parameters-error');
+const NotFoundError = require('../errors/not-found-error');
 
 const findUser = (req, res, next) => {
-  const { name, email } = req.body;
-  User.find({ name, email })
+  User.findById(req.user._id)
     .then((user) => {
       if (!user) {
         throw new NotFoundError('такого пользователя нет');
@@ -26,7 +25,7 @@ const createUser = (req, res, next) => {
     .then((user) => {
       if (!user) {
         throw new ParametersError('Ошибка в параметрах');
-      } else res.status(201).send(user);
+      } else res.status(201).send({ message: 'пользователь создан' });
     })
     .catch(next);
 };

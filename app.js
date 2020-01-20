@@ -4,19 +4,21 @@ const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
+const mongoose = require('mongoose');
+const { localAdress } = require('./config');
 
 const app = express();
-const mongoose = require('mongoose');
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { MONGO_ADRESS } = process.env;
-
+const { NODE_ENV, MONGO_ADRESS } = process.env;
+const mongoAdress = NODE_ENV === 'production' ? MONGO_ADRESS : localAdress;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(mongoAdress, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
