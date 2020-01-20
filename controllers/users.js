@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const ParametersError = require('../errors/parameters-error');

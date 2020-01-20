@@ -1,9 +1,8 @@
-/* eslint-disable consistent-return */
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const AuthError = require('../errors/auth-error');
 const { localKey } = require('../config');
-console.log (localKey);
+
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
@@ -13,7 +12,6 @@ module.exports = (req, res, next) => {
   const token = authorization.replace('Bearer ', '');
   const { NODE_ENV, JWT_SECRET } = process.env;
   const key = NODE_ENV === 'production' ? JWT_SECRET : localKey;
-  console.log (key);
   let payload;
   try {
     payload = jwt.verify(token, key);
