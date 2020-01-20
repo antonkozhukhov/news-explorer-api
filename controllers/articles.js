@@ -3,6 +3,13 @@ const Article = require('../models/article');
 const ParametersError = require('../errors/parameters-error');
 const NotFoundError = require('../errors/not-found-error');
 const NotFoundArticleError = require('../errors/not-found-article-error');
+const {
+  parametersErrorMessage,
+  articleIscreatedMessage,
+  notFoundArticleMessage,
+  deleteArticleMessage,
+  deleteNotYourArticleMessage,
+} = require('../messages');
 
 const getArticles = (req, res, next) => {
   Article.find({})
@@ -19,8 +26,8 @@ const postArticle = (req, res, next) => {
   })
     .then((article) => {
       if (!article) {
-        throw new ParametersError('ошибка в параметрах');
-      } else res.status(201).send({ message: 'статья создана' });
+        throw new ParametersError(parametersErrorMessage);
+      } else res.status(201).send({ message: articleIscreatedMessage });
     })
     .catch(next);
 };
@@ -28,7 +35,7 @@ const deleteArticle = (req, res, next) => {
   Article.findById(req.params.id).select('owner')
     .then((article) => {
       if (!article) {
-        throw new NotFoundError('такой статьи нет');
+        throw new NotFoundError(notFoundArticleMessage);
       } else return article;
     })
 
@@ -37,12 +44,12 @@ const deleteArticle = (req, res, next) => {
         Article.findByIdAndRemove(req.params.id)
 
           .then(() => {
-            res.send({ message: 'статья удалена' });
+            res.send({ message: deleteArticleMessage });
           })
           .catch(() => {
-            throw new NotFoundError('такой статьи нет');
+            throw new NotFoundError(notFoundArticleMessage);
           });
-      } else throw new NotFoundArticleError('Нельзя удалять чужие статьи');
+      } else throw new NotFoundArticleError(deleteNotYourArticleMessage);
     })
 
     .catch(next);

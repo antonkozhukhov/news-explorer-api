@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const AuthError = require('../errors/auth-error');
 const { localKey } = require('../config');
+const { incorrectEmailOrParolMessage } = require('../messages');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 module.exports.login = (req, res, next) => {
@@ -24,7 +25,7 @@ module.exports.login = (req, res, next) => {
       res.send(token);
     })
     .catch(() => {
-      throw new AuthError('Неправильный email и/или пароль');
+      throw new AuthError(incorrectEmailOrParolMessage);
     })
     .catch(next);
 };
