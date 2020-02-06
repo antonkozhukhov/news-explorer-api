@@ -1,8 +1,15 @@
 
 const Article = require('../models/article');
-const ParametersError = require('../middlewares/parameters-error');
-const NotFoundError = require('../middlewares/not-found-error');
-const NotFoundArticleError = require('../middlewares/not-found-article-error');
+const ParametersError = require('../errors/parameters-error');
+const NotFoundError = require('../errors/not-found-error');
+const NotFoundArticleError = require('../errors/not-found-article-error');
+const {
+  parametersErrorMessage,
+  articleIscreatedMessage,
+  notFoundArticleMessage,
+  deleteArticleMessage,
+  deleteNotYourArticleMessage,
+} = require('../messages');
 
 const getArticles = (req, res, next) => {
   Article.find({})
@@ -13,33 +20,40 @@ const postArticle = (req, res, next) => {
   const {
     keyword, title, text, date, source, link, image,
   } = req.body;
+  const owner = req.user._id;
   Article.create({
-    keyword, title, text, date, source, link, image,
+    keyword, title, text, date, source, link, image, owner,
   })
     .then((article) => {
       if (!article) {
-        throw new ParametersError('ошибка в параметрах');
-      } else res.status(201).send(article);
+        throw new ParametersError(parametersErrorMessage);
+      } else res.status(201).send({ message: articleIscreatedMessage });
     })
     .catch(next);
 };
 const deleteArticle = (req, res, next) => {
-  Article.findById(req.params.id)
+  Article.findById(req.params.id).select('owner')
     .then((article) => {
-      if (article.owner === req.user._id) {
-        Article.findByIdAndRemove(req.params.id)
-          .then((article1) => {
-            if (!article1) {
-              throw new NotFoundError('такой статьи нет');
-            } else res.send(article);
-          })
-          .catch(next);
-      } else throw new NotFoundArticleError('Нельзя удалять чужие статьи');
+      if (!article) {
+        throw new NotFoundError(notFoundArticleMessage);
+      } else return article;
     })
+
+    .then((article) => {
+      if (String(article.owner) === req.user._id) {
+        Article.findByIdAndRemove(req.params.id)
+
+          .then(() => {
+            res.send({ message: deleteArticleMessage });
+          })
+          .catch(() => {
+            throw new NotFoundError(notFoundArticleMessage);
+          });
+      } else throw new NotFoundArticleError(deleteNotYourArticleMessage);
+    })
+
     .catch(next);
 };
-
-
 module.exports = {
   getArticles, postArticle, deleteArticle,
 };

@@ -3,8 +3,10 @@ const { celebrate, Joi } = require('celebrate');
 const articles = require('./articles');
 const users = require('./users');
 const auth = require('../middlewares/auth');
-const { createUser } = require('../controllers/users');
+const { createUser, findEmail } = require('../controllers/users');
 const { login } = require('../controllers/login');
+const NotFoundError = require('../errors/not-found-error');
+const { resourceNotFoundMessage } = require('../messages');
 
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
@@ -20,8 +22,8 @@ router.post('/signup', celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
-}), createUser);
-router.use('/*', (req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден1' });
+}), findEmail, createUser);
+router.use('/*', () => {
+  throw new NotFoundError(resourceNotFoundMessage);
 });
 module.exports = router;
