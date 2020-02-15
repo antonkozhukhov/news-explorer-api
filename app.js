@@ -1,3 +1,4 @@
+const cors = require('cors');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -8,8 +9,14 @@ const mongoose = require('mongoose');
 const { localAdress } = require('./config');
 const cenralizedError = require('./errors/centralized-error');
 
-const app = express();
 
+const app = express();
+const corsOptions = {
+  origin: 'http:localhost:8081',
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+app.options('*', cors());
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { NODE_ENV, MONGO_ADRESS } = process.env;
@@ -38,7 +45,7 @@ app.use(limiter);
 app.use(helmet());
 app.use(requestLogger);
 
-app.use(router);
+app.use(cors(corsOptions), router);
 
 app.use(errorLogger);
 app.use(errors());
