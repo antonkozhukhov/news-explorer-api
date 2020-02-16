@@ -9,13 +9,19 @@ const { login } = require('../controllers/login');
 const NotFoundError = require('../errors/not-found-error');
 const { resourceNotFoundMessage } = require('../messages');
 
+const whitelist = ['null', 'http://example2.com'];
 const corsOptions = {
-  origin: 'null',
-  optionsSuccessStatus: 200,
-  credentials: true,
+  credentials: true, // This is important.
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin)) return callback(null, true);
+
+    callback(new Error('Not allowed by CORS'));
+  },
 };
 
-router.options('*', cors());
+router.use(cors(corsOptions));
+
+
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
 router.post('/signin', cors(corsOptions), celebrate({
