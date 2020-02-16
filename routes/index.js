@@ -17,7 +17,7 @@ const corsOptions = {
 
 router.options('null', cors());
 router.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'null');
+  res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:19575/');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
   res.header(
     'Access-Control-Allow-Headers',
