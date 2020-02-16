@@ -10,7 +10,7 @@ const NotFoundError = require('../errors/not-found-error');
 const { resourceNotFoundMessage } = require('../messages');
 
 const corsOptions = {
-  origin: 'http://localhost:8081',
+  origin: 'null',
   optionsSuccessStatus: 200,
   credentials: true,
 };

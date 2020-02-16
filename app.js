@@ -12,7 +12,7 @@ const cenralizedError = require('./errors/centralized-error');
 
 const app = express();
 const corsOptions = {
-  origin: 'http://localhost:8081',
+  origin: 'null',
   optionsSuccessStatus: 200,
   credentials: true,
 };
