@@ -16,6 +16,15 @@ const corsOptions = {
 };
 
 router.options('null', cors());
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'null');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
 router.post('/signin', cors(corsOptions), celebrate({
