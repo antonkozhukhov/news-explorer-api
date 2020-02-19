@@ -16,7 +16,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
   credentials: true,
 };
-app.options('*', cors());
+app.options('https://www.news-explorer.fun', cors());
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { NODE_ENV, MONGO_ADRESS } = process.env;
@@ -40,15 +40,15 @@ const router = require('./routes/index.js');
 
 app.listen(PORT, () => {
 });
-/* app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080/');
+ app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://www.news-explorer.fun');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
-}); */
+});
 app.use(limiter);
 app.use(helmet());
 app.use(requestLogger);
