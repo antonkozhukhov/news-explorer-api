@@ -12,7 +12,7 @@ const cenralizedError = require('./errors/centralized-error');
 
 const app = express();
 const corsOptions = {
-  origin: 'null',
+  origin: 'https://www.news-explorer.fun',
   optionsSuccessStatus: 200,
   credentials: true,
 };
@@ -40,7 +40,7 @@ const router = require('./routes/index.js');
 
 app.listen(PORT, () => {
 });
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8080/');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
   res.header(
@@ -48,7 +48,7 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
-});
+}); */
 app.use(limiter);
 app.use(helmet());
 app.use(requestLogger);
