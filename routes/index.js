@@ -25,6 +25,8 @@ router.use((req, res, next) => {
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept',
   );
+  res.sendStatus(200);
+
   next();
 });
 router.use('/articles', auth, articles);
