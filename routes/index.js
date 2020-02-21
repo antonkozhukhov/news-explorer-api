@@ -23,9 +23,9 @@ const corsOptions = {
 };
 
 
-router.options('https://www.news-explorer.fun', 'https://news-explorer.fun', 'https://antonkozhukhov.github.io/news-explorer-frontend', cors());
+router.options(whitelist, cors());
 router.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://www.news-explorer.fun', 'https://news-explorer.fun', 'https://antonkozhukhov.github.io/news-explorer-frontend');
+  res.header('Access-Control-Allow-Origin', whitelist);
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
   res.header(
     'Access-Control-Allow-Headers',
