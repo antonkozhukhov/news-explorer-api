@@ -11,13 +11,7 @@ const { resourceNotFoundMessage } = require('../messages');
 
 const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'https://antonkozhukhov.github.io/news-explorer-frontend'];
 const corsOptions = {
-  origin(origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: whitelist,
   optionsSuccessStatus: 200,
   credentials: true,
 };
