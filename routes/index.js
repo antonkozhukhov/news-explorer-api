@@ -17,9 +17,9 @@ const corsOptions = {
 };
 
 
-router.options('https://www.news-explorer.fun', cors());
+router.options('*', cors());
 router.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://www.news-explorer.fun');
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
   res.header(
     'Access-Control-Allow-Headers',
