@@ -17,7 +17,7 @@ const corsOptions = {
 };
 
 
-router.options(whitelist, cors());
+router.options('*', cors());
 router.use((req, res, next) => {
   if (whitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
