@@ -9,7 +9,7 @@ const { login } = require('../controllers/login');
 const NotFoundError = require('../errors/not-found-error');
 const { resourceNotFoundMessage } = require('../messages');
 
-const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'https://antonkozhukhov.github.io/news-explorer-frontend'];
+const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'http://www.news-explorer.fun', 'http://news-explorer.fun', 'https://antonkozhukhov.github.io/news-explorer-frontend'];
 const corsOptions = {
   origin: whitelist,
   optionsSuccessStatus: 200,
