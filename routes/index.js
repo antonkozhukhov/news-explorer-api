@@ -34,7 +34,7 @@ router.use((req, res, next) => {
 
   next();
 }); */
-router.options('https://www.news-explorer.fun/index.html', cors());
+router.options('www.news-explorer.fun', cors());
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
 router.post('/signin', celebrate({
