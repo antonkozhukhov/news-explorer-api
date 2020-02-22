@@ -17,17 +17,11 @@ const corsOptions = {
 };
 
 
-router.options('*', cors());
-router.use('*', (req, res, next) => {
-  if (req.method == 'OPTIONS') {
-    res.status(200);
-    res.send();
-  } else {
-    next();
-  }
-});
+router.options('http://www.news-explorer.fun', cors());
+
 router.use((req, res, next) => {
   if (whitelist.indexOf(req.headers.origin) !== -1) {
+
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
