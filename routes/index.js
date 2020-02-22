@@ -37,6 +37,7 @@ router.use((req, res, next) => {
 
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
+router.options('/signinp', cors());
 router.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
