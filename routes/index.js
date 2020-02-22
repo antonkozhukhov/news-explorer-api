@@ -30,13 +30,13 @@ router.use((req, res, next) => {
 });
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
-router.post('/signin', cors(corsOptions), celebrate({
+router.post('/signin', cors(), celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 }), login);
-router.post('/signup', cors(corsOptions), celebrate({
+router.post('/signup', cors(), celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
