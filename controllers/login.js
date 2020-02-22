@@ -7,6 +7,7 @@ const { incorrectEmailOrParolMessage } = require('../messages');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 module.exports.login = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://www.news-explorer.fun');
   const { email, password } = req.body;
   const key = NODE_ENV === 'production' ? JWT_SECRET : localKey;
   return User.findUserByCredentials(email, password)
