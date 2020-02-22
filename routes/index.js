@@ -1,5 +1,5 @@
 const router = require('express').Router();
-//const cors = require('cors');
+const cors = require('cors');
 const { celebrate, Joi } = require('celebrate');
 const articles = require('./articles');
 const users = require('./users');
@@ -36,7 +36,7 @@ router.post('/signin', celebrate({
     password: Joi.string().required(),
   }),
 }), login);
-router.post('/signup', celebrate({
+router.post('/signup', cors(), celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
