@@ -17,7 +17,7 @@ const corsOptions = {
 };
 
 
-router.options('https://www.api.news-explorer.fun', cors());
+//router.options('https://www.api.news-explorer.fun', cors());
 router.use((req, res, next) => {
   if (whitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -30,13 +30,13 @@ router.use((req, res, next) => {
 });
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
-router.post('/signin', cors(corsOptions), celebrate({
+router.post('/signin', cors(), celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 }), login);
-router.post('/signup', cors(corsOptions), celebrate({
+router.post('/signup', cors(), celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
