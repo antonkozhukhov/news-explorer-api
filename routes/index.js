@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const cors = require('cors');
+//const cors = require('cors');
 const { celebrate, Joi } = require('celebrate');
 const articles = require('./articles');
 const users = require('./users');
@@ -9,7 +9,7 @@ const { login } = require('../controllers/login');
 const NotFoundError = require('../errors/not-found-error');
 const { resourceNotFoundMessage } = require('../messages');
 
-const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'http://www.news-explorer.fun', 'http://news-explorer.fun', 'https://antonkozhukhov.github.io'];
+/* const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'http://www.news-explorer.fun', 'http://news-explorer.fun', 'https://antonkozhukhov.github.io'];
 const corsOptions = {
   origin: ['https://www.news-explorer.fun', 'https://news-explorer.fun'],
   optionsSuccessStatus: 200,
@@ -27,16 +27,16 @@ router.use((req, res, next) => {
 
   next();
 });
-router.options('http://news-explorer.fun/', cors());
+router.options('http://news-explorer.fun/', cors()); */
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
-router.post('/signin', cors(corsOptions), celebrate({
+router.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 }), login);
-router.post('/signup', cors(corsOptions), celebrate({
+router.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),

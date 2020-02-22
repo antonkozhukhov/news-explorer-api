@@ -10,7 +10,13 @@ const cenralizedError = require('./errors/centralized-error');
 
 
 const app = express();
-
+app.route('*')
+  .all((req, res, next) => {
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'X-API-TOKEN, Content-Type, Authorization, Content-Length, X-Requested-With');
+    next();
+  });
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
