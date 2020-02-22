@@ -33,7 +33,7 @@ router.use((req, res, next) => {
 
   next();
 }); */
-// router.options('*', cors());
+
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
 router.post('/signin', celebrate({
@@ -42,7 +42,8 @@ router.post('/signin', celebrate({
     password: Joi.string().required(),
   }),
 }), login);
-router.post('/signup', celebrate({
+router.options('/signup', cors());
+router.post('/signup', cors(), celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
