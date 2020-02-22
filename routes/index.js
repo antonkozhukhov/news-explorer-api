@@ -23,8 +23,7 @@ router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header('Access-Control-Allow-Headers', 'X-API-TOKEN, Content-Type, Authorization, Content-Length, X-Requested-With');
     res.header('Access-Control-Allow-Credentials', 'true');
-    console.log(res.headers)
-  }
+    }
 
   next();
 });
