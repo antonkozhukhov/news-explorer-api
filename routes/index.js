@@ -24,7 +24,6 @@ router.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Credentials', 'true');
-    res.statusCode(200);
   }
 
   next();
@@ -37,7 +36,7 @@ router.post('/signin', cors(corsOptions), celebrate({
     password: Joi.string().required(),
   }),
 }), login);
-router.post('/signup', celebrate({
+router.post('/signup', cors(corsOptions), celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
