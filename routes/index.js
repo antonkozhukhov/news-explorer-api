@@ -9,6 +9,13 @@ const { login } = require('../controllers/login');
 const NotFoundError = require('../errors/not-found-error');
 const { resourceNotFoundMessage } = require('../messages');
 
+router.route('*')
+  .all((req, res, next) => {
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'X-API-TOKEN, Content-Type, Authorization, Content-Length, X-Requested-With');
+    next();
+  });
 /* const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'http://www.news-explorer.fun', 'http://news-explorer.fun', 'https://antonkozhukhov.github.io'];
 const corsOptions = {
   origin: ['https://www.news-explorer.fun', 'https://news-explorer.fun'],
