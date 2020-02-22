@@ -18,6 +18,7 @@ const corsOptions = {
 };
 
 router.use((req, res, next) => {
+  console.log(req.headers.origin);
   if (whitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Origin', req.headers.origin);
