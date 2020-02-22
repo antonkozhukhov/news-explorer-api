@@ -33,8 +33,8 @@ router.use((req, res, next) => {
   }
 
   next();
-});
-router.options('http://news-explorer.fun/', cors()); */
+}); */
+router.options('*', cors());
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
 router.post('/signin', celebrate({
