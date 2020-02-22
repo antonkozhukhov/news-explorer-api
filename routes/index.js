@@ -17,7 +17,7 @@ const corsOptions = {
 };
 
 
-router.options('http://www.news-explorer.fun', cors());
+router.options('http://news-explorer.fun', cors());
 
 router.use((req, res, next) => {
   if (whitelist.indexOf(req.headers.origin) !== -1) {
