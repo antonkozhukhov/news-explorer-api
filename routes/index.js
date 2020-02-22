@@ -12,7 +12,7 @@ const { resourceNotFoundMessage } = require('../messages');
 router.route('*')
   .all((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header('Access-Control-Allow-Headers', 'X-API-TOKEN, Content-Type, Authorization, Content-Length, X-Requested-With');
     next();
   });
@@ -25,7 +25,6 @@ const corsOptions = {
 
 router.use((req, res, next) => {
   if (whitelist.indexOf(req.headers.origin) !== -1) {
-
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -34,7 +33,7 @@ router.use((req, res, next) => {
 
   next();
 }); */
-//router.options('*', cors());
+// router.options('*', cors());
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
 router.post('/signin', celebrate({
