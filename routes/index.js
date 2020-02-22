@@ -17,13 +17,13 @@ router.route('*')
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
   });
-/* const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'http://www.news-explorer.fun', 'http://news-explorer.fun', 'https://antonkozhukhov.github.io'];
+ const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'http://www.news-explorer.fun', 'http://news-explorer.fun', 'https://antonkozhukhov.github.io'];
 const corsOptions = {
-  origin: ['https://www.news-explorer.fun', 'https://news-explorer.fun'],
+  origin: whitelist,
   optionsSuccessStatus: 200,
   credentials: true,
 };
-
+/*
 router.use((req, res, next) => {
   if (whitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -38,14 +38,14 @@ router.use((req, res, next) => {
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
 router.options('/signin', cors());
-router.post('/signin', cors(), celebrate({
+router.post('/signin', cors(corsOptions), celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 }), login);
 router.options('/signup', cors());
-router.post('/signup', cors(), celebrate({
+router.post('/signup', cors(corsOptions), celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
