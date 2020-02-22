@@ -17,7 +17,7 @@ const corsOptions = {
 };
 
 
-router.options('http://news-explorer.fun', cors());
+
 
 router.use((req, res, next) => {
   if (whitelist.indexOf(req.headers.origin) !== -1) {
@@ -30,6 +30,7 @@ router.use((req, res, next) => {
 
   next();
 });
+router.options('http://news-explorer.fun', cors());
 router.use('/articles', auth, articles);
 router.use('/users', auth, users);
 router.post('/signin', cors(corsOptions), celebrate({
