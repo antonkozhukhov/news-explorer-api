@@ -11,13 +11,13 @@ const { resourceNotFoundMessage } = require('../messages');
 
 const whitelist = ['https://www.news-explorer.fun', 'https://news-explorer.fun', 'http://www.news-explorer.fun', 'http://news-explorer.fun', 'https://antonkozhukhov.github.io'];
 const corsOptions = {
-  origin: whitelist,
+  origin: ['https://www.news-explorer.fun', 'https://news-explorer.fun'],
   optionsSuccessStatus: 200,
   credentials: true,
 };
 
 
-router.options('https://www.news-explorer.fun', cors());
+//router.options('https://www.news-explorer.fun', cors());
 router.use((req, res, next) => {
   if (whitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
