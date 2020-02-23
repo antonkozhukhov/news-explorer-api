@@ -21,7 +21,7 @@ router.use((req, res, next) => {
 
   if (whitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Origin', 'https://www.news-explorer.fun');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'X-API-TOKEN, Content-Type, Authorization, Content-Length, X-Requested-With');
 
     }
