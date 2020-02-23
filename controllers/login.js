@@ -22,7 +22,7 @@ module.exports.login = (req, res, next) => {
         httpOnly: true,
          sameSite: true,
       }); */
-      res.send(token);
+      res.send({ token });
     })
     .catch(() => {
       throw new AuthError(incorrectEmailOrParolMessage);
