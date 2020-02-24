@@ -16,7 +16,7 @@ const getArticles = (req, res, next) => {
     .catch(next);
 };
 const getMyArticles = (req, res, next) => {
-  Article.find({ owner: req.user._id }).select('owner')
+  Article.find({ owner: req.user._id })
     .then((article) => res.send(article))
     .catch(next);
 };
