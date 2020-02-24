@@ -27,7 +27,7 @@ const postArticle = (req, res, next) => {
     .then((article) => {
       if (!article) {
         throw new ParametersError(parametersErrorMessage);
-      } else res.status(201).send({ message: articleIscreatedMessage });
+      } else res.status(201).send(article._id);
     })
     .catch(next);
 };
