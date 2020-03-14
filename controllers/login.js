@@ -17,12 +17,12 @@ module.exports.login = (req, res, next) => {
         key,
         { expiresIn: '7d' },
       );
-      res.cookie('jwt', token, {
+      /* res.cookie('jwt', token, {
         maxAge: 3600000,
         httpOnly: true,
-        sameSite: true,
-      });
-      res.send(token);
+         sameSite: true,
+      }); */
+      res.send({ token });
     })
     .catch(() => {
       throw new AuthError(incorrectEmailOrParolMessage);

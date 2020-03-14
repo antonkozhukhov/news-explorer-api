@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const {
-  getArticles, postArticle, deleteArticle,
+  getArticles, postArticle, deleteArticle, getMyArticles,
 } = require('../controllers/articles');
 
 router.get('', getArticles);
+router.get('/me', getMyArticles);
 router.post('', celebrate({
   body: Joi.object().keys({
     keyword: Joi.string().required(),

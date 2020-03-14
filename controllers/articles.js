@@ -5,7 +5,6 @@ const NotFoundError = require('../errors/not-found-error');
 const NotFoundArticleError = require('../errors/not-found-article-error');
 const {
   parametersErrorMessage,
-  articleIscreatedMessage,
   notFoundArticleMessage,
   deleteArticleMessage,
   deleteNotYourArticleMessage,
@@ -13,6 +12,11 @@ const {
 
 const getArticles = (req, res, next) => {
   Article.find({})
+    .then((article) => res.send(article))
+    .catch(next);
+};
+const getMyArticles = (req, res, next) => {
+  Article.find({ owner: req.user._id })
     .then((article) => res.send(article))
     .catch(next);
 };
@@ -27,7 +31,7 @@ const postArticle = (req, res, next) => {
     .then((article) => {
       if (!article) {
         throw new ParametersError(parametersErrorMessage);
-      } else res.status(201).send({ message: articleIscreatedMessage });
+      } else res.status(201).send(article._id);
     })
     .catch(next);
 };
@@ -55,5 +59,5 @@ const deleteArticle = (req, res, next) => {
     .catch(next);
 };
 module.exports = {
-  getArticles, postArticle, deleteArticle,
+  getArticles, postArticle, deleteArticle, getMyArticles,
 };
